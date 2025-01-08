@@ -8,8 +8,8 @@
 
 An attempt to build microservice-based scraper with backend powered by FastAPI
 
--   **Github repository**: <https://github.com/sbkubric/github_scraper_api/>
--   **Documentation** <https://sbkubric.github.io/github-scraper/api/>
+- **Github repository**: <https://github.com/sbkubric/github_scraper_api/>
+- **Documentation** <https://sbkubric.github.io/github-scraper/api/>
 
 ## Getting started with your project
 
