@@ -1,4 +1,4 @@
-# Contributing to `github-scraper`
+# Contributing to `github-scraper-api`
 
 Contributions are welcome, and they are greatly appreciated!
 Every little bit helps, and credit will always be given.
@@ -13,9 +13,9 @@ Report bugs at https://github.com/sbkubric/github-scraper/issues
 
 If you are reporting a bug, please include:
 
-- Your operating system name and version.
-- Any details about your local setup that might be helpful in troubleshooting.
-- Detailed steps to reproduce the bug.
+-   Your operating system name and version.
+-   Any details about your local setup that might be helpful in troubleshooting.
+-   Detailed steps to reproduce the bug.
 
 ## Fix Bugs
 
@@ -37,29 +37,29 @@ The best way to send feedback is to file an issue at https://github.com/sbkubric
 
 If you are proposing a new feature:
 
-- Explain in detail how it would work.
-- Keep the scope as narrow as possible, to make it easier to implement.
-- Remember that this is a volunteer-driven project, and that contributions
-  are welcome :)
+-   Explain in detail how it would work.
+-   Keep the scope as narrow as possible, to make it easier to implement.
+-   Remember that this is a volunteer-driven project, and that contributions
+    are welcome :)
 
 # Get Started!
 
-Ready to contribute? Here's how to set up `github-scraper` for local development.
+Ready to contribute? Here's how to set up `github-scraper-api` for local development.
 Please note this documentation assumes you already have `uv` and `Git` installed and ready to go.
 
-1. Fork the `github-scraper` repo on GitHub.
+1. Fork the `github-scraper-api` repo on GitHub.
 
 2. Clone your fork locally:
 
 ```bash
 cd <directory_in_which_repo_should_be_created>
-git clone git@github.com:YOUR_NAME/github-scraper.git
+git clone git@github.com:YOUR_NAME/github_scraper_api.git
 ```
 
 3. Now we need to install the environment. Navigate into the directory
 
 ```bash
-cd github-scraper
+cd github_scraper_api
 ```
 
 Then, install and activate the environment with:

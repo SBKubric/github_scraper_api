@@ -18,4 +18,4 @@ ADD . /app
 # Sync the project
 RUN uv sync --frozen
 
-CMD [ "python", "github_scraper/foo.py"]
+CMD [ "python", "api/foo.py"]

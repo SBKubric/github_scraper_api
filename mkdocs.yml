@@ -1,10 +1,10 @@
-site_name: github-scraper
-repo_url: https://github.com/sbkubric/github-scraper
-site_url: https://sbkubric.github.io/github-scraper
-site_description: An attempt to build microservice-based scraper with backend powered by FastAPI
+site_name: github-scraper-api
+repo_url: https://github.com/sbkubric/github_scraper_api
+site_url: https://sbkubric.github.io/github-scraper/api
+site_description: FastAPI API for webscraper
 site_author: Stan aka SBKubric Bogatskiy
 edit_uri: edit/main/docs/
-repo_name: sbkubric/github-scraper
+repo_name: sbkubric/github_scraper_api
 copyright: Maintained by <a href="https://sbkubric.com">sbkubric</a>.
 
 nav:
@@ -15,7 +15,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [github_scraper]
+          paths: [api]
 theme:
   name: material
   feature:
@@ -41,9 +41,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/sbkubric/github-scraper
-    - icon: fontawesome/brands/python
-      link: https://pypi.org/project/github-scraper
+      link: https://github.com/sbkubric/github_scraper_api
 
 markdown_extensions:
   - toc:

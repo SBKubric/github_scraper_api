@@ -1,1 +1,1 @@
-::: github_scraper.foo
+::: github_scraper_api.foo

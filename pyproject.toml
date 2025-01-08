@@ -1,7 +1,7 @@
 [project]
-name = "github-scraper"
+name = "github-scraper-api"
 version = "0.0.1"
-description = "An attempt to build microservice-based scraper with backend powered by FastAPI"
+description = "HTTP API for webscraper"
 authors = [{ name = "Stan aka SBKubric Bogatskiy", email = "sbkubric@gmail.com" }]
 readme = "README.md"
 keywords = ['python']
@@ -19,9 +19,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://sbkubric.github.io/github-scraper/"
-Repository = "https://github.com/sbkubric/github-scraper"
-Documentation = "https://sbkubric.github.io/github-scraper/"
+Homepage = "https://sbkubric.github.io/github-scraper/api/"
+Repository = "https://github.com/sbkubric/github_scraper_api"
+Documentation = "https://sbkubric.github.io/github-scraper/api/"
 
 [dependency-groups]
 dev = [
@@ -42,10 +42,10 @@ requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-py-modules = ["github_scraper"]
+py-modules = ["api"]
 
 [tool.mypy]
-files = ["github_scraper"]
+files = ["api"]
 disallow_untyped_defs = true
 disallow_any_unimported = true
 no_implicit_optional = true
@@ -113,4 +113,4 @@ skip_empty = true
 
 [tool.coverage.run]
 branch = true
-source = ["github_scraper"]
+source = ["api"]
