@@ -1,0 +1,117 @@
+openapi: 3.0.3
+info:
+  title: Repository Insights API
+  description: API for retrieving top public repositories and repository activity.
+  version: 1.0.0
+paths:
+  /api/repos/top100:
+    get:
+      summary: Get Top 100 Public Repositories
+      description: |
+        Retrieve the top 100 public repositories ranked by stars. Optionally, sort the results by specifying query parameters.
+      parameters:
+        - name: sort_by
+          in: query
+          description: Field to sort by (e.g., stars, watchers, forks).
+          required: false
+          schema:
+            type: string
+            enum: [stars, watchers, forks, open_issues, language, position_cur]
+        - name: order
+          in: query
+          description: Sorting order (asc or desc).
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        "200":
+          description: A list of the top 100 repositories.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    repo:
+                      type: string
+                      description: Full name of the repository (e.g., owner/repo).
+                    owner:
+                      type: string
+                      description: Owner of the repository.
+                    position_cur:
+                      type: integer
+                      description: Current position in the top 100.
+                    position_prev:
+                      type: integer
+                      description: Previous position in the top 100.
+                    stars:
+                      type: integer
+                      description: Number of stars.
+                    watchers:
+                      type: integer
+                      description: Number of watchers.
+                    forks:
+                      type: integer
+                      description: Number of forks.
+                    open_issues:
+                      type: integer
+                      description: Number of open issues.
+                    language:
+                      type: string
+                      description: Primary programming language of the repository.
+  /api/repos/{owner}/{repo}/activity:
+    get:
+      summary: Get Repository Activity
+      description: |
+        Retrieve the commit activity of a repository for a specified date range.
+      parameters:
+        - name: owner
+          in: path
+          description: Owner of the repository.
+          required: true
+          schema:
+            type: string
+        - name: repo
+          in: path
+          description: Name of the repository.
+          required: true
+          schema:
+            type: string
+        - name: since
+          in: query
+          description: Start date for the activity range (inclusive).
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: until
+          in: query
+          description: End date for the activity range (inclusive).
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Commit activity for the specified repository and date range.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      description: Date of the activity.
+                    commits:
+                      type: integer
+                      description: Number of commits on this date.
+                    authors:
+                      type: array
+                      items:
+                        type: string
+                      description: List of authors who made commits on this date.
