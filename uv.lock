@@ -285,7 +285,7 @@ wheels = [
 ]
 
 [[package]]
-name = "api"
+name = "github-scraper-api"
 version = "0.0.1"
 source = { editable = "." }
 
