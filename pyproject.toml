@@ -40,6 +40,9 @@ dev = [
     "mkdocs-material>=8.5.10",
     "mkdocstrings[python]>=0.26.1",
 ]
+production = [
+    "gunicorn>=23.0.0",
+]
 
 [build-system]
 requires = ["setuptools >= 61.0"]

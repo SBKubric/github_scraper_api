@@ -13,7 +13,7 @@ ENV UV_SYSTEM_PYTHON=1
 
 # Install dependencies using uv without actually installing it
 RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
-    uv sync --frozen --no-install-project
+    uv sync --frozen --no-install-project --no-group dev --group production
 
 # Copy the project into the image
 ADD . /app
