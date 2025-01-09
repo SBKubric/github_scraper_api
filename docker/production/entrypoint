@@ -1,0 +1,62 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+# Set default PostgreSQL user if not provided
+if [ -z "${POSTGRES_USER}" ]; then
+    base_postgres_image_default_user='postgres'
+    export POSTGRES_USER="${base_postgres_image_default_user}"
+fi
+
+# Function to check if PostgreSQL is ready using psycopg3
+postgres_ready() {
+python << END
+import sys
+import psycopg
+
+try:
+    with psycopg.connect(
+        dbname="${POSTGRES_DB}",
+        user="${POSTGRES_USER}",
+        password="${POSTGRES_PASSWORD}",
+        host="${POSTGRES_HOST}",
+        port="${POSTGRES_PORT}",
+    ) as conn:
+        # Test the connection by running a simple query
+        conn.execute("SELECT 1")
+except psycopg.OperationalError:
+    sys.exit(-1)
+sys.exit(0)
+END
+}
+
+# Implement exponential backoff with jitter
+max_attempts=10
+base_sleep=1
+max_sleep=32  # Maximum wait time
+
+attempt=0
+until postgres_ready; do
+  attempt=$((attempt + 1))
+  if [ "$attempt" -gt "$max_attempts" ]; then
+    >&2 echo "PostgreSQL is still unavailable after $max_attempts attempts. Exiting."
+    exit 1
+  fi
+
+  # Calculate exponential backoff time with jitter
+  sleep_time=$((base_sleep * (2 ** (attempt - 1))))
+  sleep_time=$((sleep_time < max_sleep ? sleep_time : max_sleep))
+  jitter=$(awk -v min=0 -v max=100 'BEGIN{srand(); print min+rand()*(max-min)}') # Jitter in milliseconds
+  jitter=$(bc <<< "scale=2; $jitter / 1000") # Convert to seconds
+  sleep_time=$(bc <<< "scale=2; $sleep_time + $jitter")
+
+  >&2 echo "Attempt $attempt: Waiting for PostgreSQL... retrying in $sleep_time seconds."
+  sleep "$sleep_time"
+done
+
+>&2 echo 'PostgreSQL is available.'
+
+# Execute the provided command
+exec "$@"

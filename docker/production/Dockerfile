@@ -1,6 +1,5 @@
 # Install uv
 FROM python:3.12-slim
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # Change the working directory to the `app` directory
 WORKDIR /app
@@ -9,13 +8,14 @@ WORKDIR /app
 ADD uv.lock /app/uv.lock
 ADD pyproject.toml /app/pyproject.toml
 
-# Install dependencies
-RUN uv sync --frozen --no-install-project
+# tell uv to use system python
+ENV UV_SYSTEM_PYTHON=1
+
+# Install dependencies using uv without actually installing it
+RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
+    uv sync --frozen --no-install-project
 
 # Copy the project into the image
 ADD . /app
 
-# Sync the project
-RUN uv sync --frozen
-
-CMD [ "python", "api/foo.py"]
+ENTRYPOINT ["/entrypoint"]
