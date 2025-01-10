@@ -1,0 +1,43 @@
+name: github_parser
+
+services:
+  github-scraper-api:
+    image: mcr.microsoft.com/devcontainers/python:1-3.11-bullseye
+    container_name: api_dev
+    volumes:
+      - .:/workspaces/api:cached
+    env_file:
+      - ./.env/local/postgres
+      - ./.env/local/app
+    networks:
+      - dev-network
+
+    entrypoint:
+      - /usr/bin/env bash "/workspaces/api/.devcontainer/postCreateCommand.sh"
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-dev
+    # TODO: add env from .env
+    env_file:
+      - ./.env/local/postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dev-network
+
+  redis:
+    image: redis:7
+    container_name: redis-dev
+    ports:
+      - "6379:6379"
+    networks:
+      - dev-network
+
+volumes:
+  postgres_data:
+
+networks:
+  dev-network:
