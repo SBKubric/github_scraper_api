@@ -1,13 +1,9 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-    "name": "github-scraper",
-    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
-    "features": {},
-
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "api-dev",
+    "workspaceFolder": "/app",
 
     // Configure tool-specific properties.
     "customizations": {
