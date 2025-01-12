@@ -1,7 +1,7 @@
 name: github_parser
 
 services:
-  github-scraper-api:
+  api:
     build:
       context: .
       dockerfile: ./docker/local/Dockerfile
