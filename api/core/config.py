@@ -1,7 +1,7 @@
-from pydantic import BaseConfig, SecretStr
+from pydantic import BaseSettings, SecretStr
 
 
-class Config(BaseConfig):
+class Config(BaseSettings):
     postgres_host: str
     postgres_port: int
     postgres_db: str
