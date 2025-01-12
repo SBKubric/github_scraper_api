@@ -21,4 +21,13 @@ RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
 # Copy the project into the image
 COPY --chown=fastapi:fastapi . /app
 
+COPY --chown=fastapi:fastapi ./docker/local/entrypoint /entrypoint
+RUN chmod +x /entrypoint
+
+
+COPY --chown=fastapi:fastapi ./docker/local/start /start
+RUN chmod +x /start
+
+USER fastapi
+
 ENTRYPOINT ["/entrypoint"]

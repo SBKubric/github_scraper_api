@@ -3,7 +3,6 @@ FROM python:3.12-slim
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 RUN useradd -ms /bin/sh -u 1001 fastapi
-USER fastapi
 
 # Change the working directory to the `app` directory
 WORKDIR /app
@@ -17,4 +16,12 @@ RUN uv sync
 # Copy the project into the image
 COPY --chown=fastapi:fastapi . /app
 
+COPY --chown=fastapi:fastapi ./docker/production/entrypoint /entrypoint
+RUN chmod +x /entrypoint
+
+
+COPY --chown=fastapi:fastapi ./docker/local/start /start
+RUN chmod +x /start
+
+USER fastapi
 ENTRYPOINT ["/entrypoint"]

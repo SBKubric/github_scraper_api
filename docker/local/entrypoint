@@ -24,16 +24,7 @@ try:
         host="${POSTGRES_HOST}",
         port="${POSTGRES_PORT}",
     ) as conn:
-        # Test the connection by running a simple query
-        conn.execute("SELECT 1")
-except psycopg.OperationalError:
-    sys.exit(-1)
-sys.exit(0)
-END
-}
-
-# Implement exponential backoff with jitter
-max_attempts=${BACKOFF_MAX_ATTEMTS}
+max_attempts=${BACKOFF_MAX_ATTEMPTS}
 base_sleep=${BACKOFF_SLEEP_BASE}
 max_sleep=${BACKOFF_MAX_SLEEP}  # Maximum wait time
 

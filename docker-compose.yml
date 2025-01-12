@@ -10,10 +10,10 @@ services:
     env_file:
       - ./.env/local/postgres
       - ./.env/local/app
+    ports:
+      - "8000:8000"
     networks:
       - dev-network
-    entrypoint:
-      - /usr/bin/env bash "/workspaces/api/.devcontainer/postCreateCommand.sh"
     develop:
       # Create a `watch` configuration to update the app
       #
@@ -37,7 +37,7 @@ services:
     env_file:
       - ./.env/local/postgres
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -48,6 +48,7 @@ services:
     container_name: redis-dev
     ports:
       - "6379:6379"
+      - "8001:8001"
     networks:
       - dev-network
 
