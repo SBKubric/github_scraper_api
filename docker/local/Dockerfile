@@ -11,14 +11,13 @@ WORKDIR /app
 ADD uv.lock /app/uv.lock
 ADD pyproject.toml /app/pyproject.toml
 
-RUN uv sync
-
 # Copy the project into the image
 COPY --chown=fastapi:fastapi . /app
 
-COPY --chown=fastapi:fastapi ./docker/production/entrypoint /entrypoint
-RUN chmod +x /entrypoint
+RUN uv sync --frozen && chown -R fastapi:fastapi /app/.venv
 
+COPY --chown=fastapi:fastapi ./docker/local/entrypoint /entrypoint
+RUN chmod +x /entrypoint
 
 COPY --chown=fastapi:fastapi ./docker/local/start /start
 RUN chmod +x /start

@@ -14,21 +14,32 @@ fi
 postgres_ready() {
 python << END
 import sys
-import psycopg
+import asyncpg
+import asyncio
 
-try:
-    with psycopg.connect(
-        dbname="${POSTGRES_DB}",
-        user="${POSTGRES_USER}",
-        password="${POSTGRES_PASSWORD}",
-        host="${POSTGRES_HOST}",
-        port="${POSTGRES_PORT}",
-    ) as conn:
+async def check_postgres():
+    try:
+        conn = await asyncpg.connect(
+            user="${POSTGRES_USER}",
+            password="${POSTGRES_PASSWORD}",
+            database="${POSTGRES_DB}",
+            host="${POSTGRES_HOST}",
+            port="${POSTGRES_PORT}",
+        )
         # Test the connection by running a simple query
-        conn.execute("SELECT 1")
-except psycopg.OperationalError:
+        await conn.execute("SELECT 1")
+        await conn.close()
+        return True
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+
+async def main():
+    if await check_postgres():
+        sys.exit(0)
     sys.exit(-1)
-sys.exit(0)
+
+asyncio.run(main())
 END
 }
 

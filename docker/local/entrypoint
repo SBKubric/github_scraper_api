@@ -12,23 +12,44 @@ fi
 
 # Function to check if PostgreSQL is ready using psycopg3
 postgres_ready() {
-python << END
+uv run - <<EOF
 import sys
-import psycopg
+import asyncpg
+import asyncio
 
-try:
-    with psycopg.connect(
-        dbname="${POSTGRES_DB}",
-        user="${POSTGRES_USER}",
-        password="${POSTGRES_PASSWORD}",
-        host="${POSTGRES_HOST}",
-        port="${POSTGRES_PORT}",
-    ) as conn:
-max_attempts=${BACKOFF_MAX_ATTEMPTS}
-base_sleep=${BACKOFF_SLEEP_BASE}
-max_sleep=${BACKOFF_MAX_SLEEP}  # Maximum wait time
+async def check_postgres():
+    try:
+        conn = await asyncpg.connect(
+            user="${POSTGRES_USER}",
+            password="${POSTGRES_PASSWORD}",
+            database="${POSTGRES_DB}",
+            host="${POSTGRES_HOST}",
+            port="${POSTGRES_PORT}",
+        )
+        # Test the connection by running a simple query
+        await conn.execute("SELECT 1")
+        await conn.close()
+        return True
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+
+async def main():
+    if await check_postgres():
+        sys.exit(0)
+    sys.exit(-1)
+
+asyncio.run(main())
+EOF
+}
+
+# Implement exponential backoff with jitter
+max_attempts=10
+base_sleep=1
+max_sleep=32  # Maximum wait time
 
 attempt=0
+cd /app
 until postgres_ready; do
   attempt=$((attempt + 1))
   if [ "$attempt" -gt "$max_attempts" ]; then

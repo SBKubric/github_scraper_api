@@ -4,4 +4,6 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-uv run app.py
+cd /app
+>&2 echo "starting app..."
+uv run api/app.py

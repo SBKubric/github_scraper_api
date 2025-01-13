@@ -4,7 +4,7 @@ from asyncpg import Connection as connection
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from api.core.config import get_settings
-from api.db import get_db
+from api.db.postgres import get_db
 from api.handlers import repositories as handlers
 from api.models import Error, Repository, RepositoryActivity
 

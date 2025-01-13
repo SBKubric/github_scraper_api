@@ -14,6 +14,9 @@ services:
       - "8000:8000"
     networks:
       - dev-network
+    command: /bin/bash
+    stdin_open: true
+    tty: true
     develop:
       # Create a `watch` configuration to update the app
       #
