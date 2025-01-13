@@ -18,8 +18,10 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
+    "asyncpg>=0.30.0",
     "fastapi>=0.115.6",
     "psycopg[binary]>=3.2.3",
+    "pydantic-settings>=2.7.1",
 ]
 
 [project.urls]
@@ -39,6 +41,7 @@ dev = [
     "mkdocs>=1.4.2",
     "mkdocs-material>=8.5.10",
     "mkdocstrings[python]>=0.26.1",
+    "asyncpg-stubs>=0.30.0",
 ]
 production = [
     "gunicorn>=23.0.0",

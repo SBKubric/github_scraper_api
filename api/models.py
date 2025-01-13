@@ -19,3 +19,8 @@ class RepositoryActivity(BaseModel):
     date: datetime
     commits: int
     authors: str
+
+
+class Error(BaseModel):
+    detail: str  # A human-readable description of the error
+    code: int | None = None  # Optional error code for more granular error tracking
